@@ -1,0 +1,19 @@
+import pandas as pd 
+import numpy as np
+wcat=pd.read_csv("E:\Python Codes\Simple Linear\wc.at.csv")
+import matplotlib.pyplot as plt
+plt.scatter(x=wcat['Waist'],y=wcat['AT'])
+np.corrcoef(wcat['Waist'],wcat['AT'])
+wcat.corr()
+import statsmodels.formula.api as smf
+model=smf.ols('AT~Waist',data=wcat).fit()
+model.params
+model.summary()
+model2 = smf.ols('AT~np.log(Waist)',data=wcat).fit()
+model2.params
+model2.summary()
+model3 = smf.ols('np.log(AT)~Waist',data=wcat).fit()
+model3.params
+model3.summary()
+print (model.conf_int(0.05)) # 95% confidence interval
+print(model3.conf_int(0.01)) # 99% confidence level
