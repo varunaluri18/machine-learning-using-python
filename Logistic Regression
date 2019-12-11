@@ -1,0 +1,24 @@
+import pandas as pd 
+import numpy  as np
+claimants = pd.read_csv("C:\\Users \\Python-CODES\\Logistic Regression\\claimants.csv",sep=",")
+claimants.columns
+del claimants['CASENUM']
+claimants
+claimants.head(10)
+import statsmodels.formula.api as sm
+logit_model = sm.logit('ATTORNEY~CLMAGE+LOSS+CLMINSUR+CLMSEX+SEATBELT',data = claimants).fit()
+logit_model.summary()
+logit_model.params
+(np.exp(logit_model.params))
+from sklearn.metrics import confusion_matrix
+import scipy
+from sklearn import linear_model
+predict=logit_model.predict(pd.DataFrame(claimants[['CLMAGE','LOSS','CLMINSUR','CLMSEX','SEATBELT']]))
+predict
+pcnf_matrix = confusion_matrix(claimants['ATTORNEY'],predict > 0.5 )
+pcnf_matrix
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(claimants['ATTORNEY'],predict > 0.5)
+Accuracy_Score
+accuracy = (435+506)/(435+250+149+506)
+accuracy
