@@ -1,0 +1,52 @@
+import pandas as pd 
+import matplotlib.pyplot as plt
+cars = pd.read_csv("cars.csv")
+cars
+cars.head()
+cars.corr()
+#Graph the coreleation b/w the variables
+import seaborn as sns
+sns.pairplot(cars)
+cars.columns
+# for regression model
+import statsmodels.formula.api as smf 
+ml1 = smf.ols('MPG~WT+VOL+SP+HP',data=cars).fit() # regression model
+ml1.params
+ml1.summary()
+# p-values for WT,VOL are more than 0.05 and also we know that [WT,VOL] has high correlation value 
+ml_v=smf.ols('MPG~VOL',data = cars).fit()  
+ml_v.summary()
+ml_w=smf.ols('MPG~WT',data = cars).fit()  
+ml_w.summary()
+ml_wv=smf.ols('MPG~WT+VOL',data = cars).fit()  
+ml_wv.summary()
+import statsmodels.api as sm
+sm.graphics.influence_plot(ml1)
+cars_new=cars.drop(cars.index[[76]])
+ml_new = smf.ols('MPG~WT+VOL+HP+SP',data = cars_new).fit()    
+ml_new.params
+ml_new.summary()
+print(ml_new.conf_int(0.05)) # 99% confidence level
+#Finding the Influence Factor Values
+rsq_hp = smf.ols('HP~WT+VOL+SP',data=cars_new).fit().rsquared  
+vif_hp = 1/(1-rsq_hp) 
+vif_hp
+rsq_wt = smf.ols('WT~HP+VOL+SP',data=cars_new).fit().rsquared  
+vif_wt = 1/(1-rsq_wt)
+vif_wt
+rsq_vol = smf.ols('VOL~WT+SP+HP',data=cars_new).fit().rsquared  
+vif_vol = 1/(1-rsq_vol)
+vif_vol
+rsq_sp = smf.ols('SP~WT+VOL+HP',data=cars_new).fit().rsquared  
+vif_sp = 1/(1-rsq_sp)
+vif_sp  
+#Creating the table for variables,vif-values and R-Squared   
+import pandas as pd
+d1 = {'Variables':pd.Series(['Hp','WT','VOL','SP']),'VIF':pd.Series([vif_hp,vif_wt,vif_vol,vif_sp]),'R-Squared':pd.series([rsq_hp,rsq_wt,rsq_vol,rsq_sp])}
+Vif_frame = pd.DataFrame(d1,columns=['Variables','VIF','R-Squared'])  
+Vif_frame
+#Final Model
+final_ml= smf.ols('MPG~VOL+SP+HP',data = cars_new).fit()
+sm.graphics.plot_partregress_grid(final_ml)
+final_ml.params
+final_ml.summary()
