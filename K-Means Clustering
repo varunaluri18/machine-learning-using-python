@@ -1,0 +1,24 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pylab as plt
+from sklearn.cluster import	KMeans
+from scipy.spatial.distance import cdist 
+import numpy as np
+import pandas as pd
+import matplotlib.pylab as plt
+from sklearn.cluster import KMeans
+from scipy.spatial.distance import cdist 
+univ = pd.read_csv("E:\\Python Codes\\14 K means and Hierarchical\\Universities.csv")
+?univ
+del univ['Univ']
+univ
+df_norm =(univ-univ.min())/(univ.max()-  univ.min()) 
+df_norm.head(10) 
+model=KMeans(n_clusters=5)
+abc = model.fit(df_norm)
+abc
+from sklearn.cluster import KMeans
+y_kmeans = model.predict(df_norm)
+y_kmeans
+univ['clusters']=pd.Series(y_kmeans)
+univ
