@@ -1,0 +1,26 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pylab as plt
+from sklearn.cluster import KMeans
+from scipy.spatial.distance import cdist 
+univ = pd.read_csv("C:\\Users\\CH Prasanna Kumar\\Desktop\\varun\\R-CODES\\7.H Clustering\\hc.csv")
+from scipy.cluster.hierarchy import dendrogram, linkage
+from sklearn.cluster import AgglomerativeClustering
+univ
+del univ['Univ']
+univ
+df_norm = (univ - univ.min())/ (univ.max() -  univ.min()) 
+df_norm.head(10) 
+import scipy.cluster.hierarchy as sch
+dendrogram = sch.dendrogram(sch.linkage(df_norm, method = 'ward'))
+plt.title('Dendrogram')
+plt.xlabel('Customers')
+plt.ylabel('Euclidean distances')
+plt.show()
+from scipy.cluster.hierarchy import cophenet
+import scipy.cluster.hierarchy as sch
+from scipy.spatial.distance import pdist
+from sklearn.cluster import AgglomerativeClustering
+cluster = AgglomerativeClustering(n_clusters=3, affinity='euclidean', linkage='complete')  
+abc = cluster.fit_predict(df_norm)
+univ['clusters']=pd.Series(abc)
