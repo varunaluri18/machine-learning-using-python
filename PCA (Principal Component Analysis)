@@ -1,0 +1,23 @@
+import numpy as np
+import pandas as pd
+from scipy.spatial.distance import cdist 
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import scale 
+univ = pd.read_csv("C:\\Users \\varun\\R-CODES\\7.H Clustering\\hc.csv")
+univ
+del univ['Univ']
+univ
+univ_normal = scale(univ)
+univ_normal.shape
+univ_normal
+pca = PCA (n_components = 4)
+pca
+pca_values = pca.fit_transform(univ_normal)
+pca_values
+var = pca.explained_variance_ratio_
+var
+var1 = np.cumsum(np.round(var,decimals = 4)*100)
+var1
+principalDf = pd.DataFrame(data = pca_values,columns = ['principal component 1', 'principal component 2','principal component 3','principal component 4'])
+principalDf
