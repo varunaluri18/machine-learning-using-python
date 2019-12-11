@@ -1,0 +1,23 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+nb = pd.read_csv("C:\\Users\\Rohit\\Desktop\\PPTS\\Social_Network_Ads.csv")
+nb
+del nb['User ID']
+nb.shape
+X = nb.iloc[:, -3:].values
+y = nb.iloc[:, 3].values
+y
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+from sklearn.naive_bayes import GaussianNB
+model= GaussianNB()
+model.fit(X_train,y_train)
+y_pred = model.predict(X_test)
+y_pred
+y_test
+from sklearn.metrics import classification_report, confusion_matrix  
+print(confusion_matrix(y_test, y_pred))  
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(y_test, y_pred)
+Accuracy_Score
