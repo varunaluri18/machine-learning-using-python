@@ -43,3 +43,26 @@ import matplotlib.pyplot as plt
 mba.boxplot()
 mba.boxplot(column ='gmat')
 mba.boxplot(column ='workex')
+##Outlier Code for deletion of outliers
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import numpy as np
+mba = pd.read_csv("C:\\Users\\Rohit\\Desktop\\PPTS\\mba.csv")
+mba.boxplot()
+mba.boxplot(column='gmat')
+import seaborn as sns
+sns.boxplot(mba['gmat']) 
+q1 = mba['gmat'].quantile(0.25)
+q1
+q3 = mba['gmat'].quantile(0.75)
+q3
+iqr = q3-q1
+iqr
+low  = q1-1.5*iqr
+low
+high = q3+1.5*iqr
+high
+mba1 = mba.loc[(mba['gmat'] > low) & (mba['gmat'] < high)]
+mba.shape
+mba1.shape
