@@ -1,1 +1,45 @@
-hai
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+mba = pd.read_csv("C:\\Users\\Rohit\\Desktop\\PPTS\\mba.csv")
+mba
+len(mba)
+len(mba.columns)
+mba.shape
+mba.columns
+mba.head(20)
+mba.head(6)
+mba.tail(6)
+mba.info()
+mba.describe()
+mba.describe().transpose()
+mba[23:27]
+mba['workex']
+mba1 = mba[['workex','gmat']]
+mba1
+mba.mean()
+mba.std()
+mba.describe()
+mba['gmat'].mean()
+mba['gmat'].median()
+mba['gmat'].mode()
+mba['gmat'].var()
+mba['gmat'].std()
+max(mba['gmat'])
+min(mba['gmat'])
+range = max(mba['gmat'])-min(mba['gmat'])
+range
+from scipy.stats import skew
+skew(mba['gmat'])
+from scipy.stats import kurtosis
+kurtosis(mba['gmat'])
+plot = mba.plot(kind='bar')
+plot
+mba['gmat'].hist()
+mba.hist()
+import numpy as np
+import matplotlib.pyplot as plt
+mba.boxplot()
+mba.boxplot(column ='gmat')
+mba.boxplot(column ='workex')
