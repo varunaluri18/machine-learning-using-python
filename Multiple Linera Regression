@@ -45,6 +45,11 @@ import pandas as pd
 d1 = {'Variables':pd.Series(['Hp','WT','VOL','SP']),'VIF':pd.Series([vif_hp,vif_wt,vif_vol,vif_sp]),'R-Squared':pd.series([rsq_hp,rsq_wt,rsq_vol,rsq_sp])}
 Vif_frame = pd.DataFrame(d1,columns=['Variables','VIF','R-Squared'])  
 Vif_frame
+#Varience Influence Factors
+vif = pd.DataFrame()
+vif["VIF Factor"] = [variance_inflation_factor(var.values, i) for i in range(var.shape[1])]
+vif["column name"] = var.columns
+vif
 #Final Model
 final_ml= smf.ols('MPG~VOL+SP+HP',data = cars_new).fit()
 sm.graphics.plot_partregress_grid(final_ml)
