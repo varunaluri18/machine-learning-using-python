@@ -1,0 +1,71 @@
+Basic Python Coding
+import pandas as pd
+import numpy as np
+test = np.array(['s','o','c','i','a','l'])
+test
+s = pd.Series(test)
+s=pd.DataFrame(test)
+test = np.array(['s','o','c','i','a','l'])
+s = pd.Series(test,index = [1,2,3,4,5,6])
+test  = {'a':1 , 'b':2 , 'c':3}
+s = pd.Series(test)
+s = pd.Series([1,2,3,4,5,6],index = ['s','o','c','i','a','l'])
+x=pd.Series(['v','a','r','u','n','a'],index=[1,2,3,4,5,6])
+a=['varun','nagendra','chowdary']
+#Adding the value in the list
+a.append('aluri')
+#Adding the list inside the list
+a.append(['aluri'])
+#2 is the index and avn is the value
+a.insert(2,'avn')
+Data Frames and Series Program
+import pandas as pd
+import numpy as np
+test =[1,2,3,4,5]
+df = pd.DataFrame(test)
+df
+## Creating a Table
+table = [['srinu',25],['kishore',26],['mani',27],['ratna',28]]
+df = pd.DataFrame(table,columns =['Name','Age'])
+df
+table1 = {'Name':['srinu','kishore','mani','ratna'],'Age':[25,26,27,28]}
+df = pd.DataFrame(table1,index=[1,2,3,4])
+df
+## Columns Selection , deletion , addition
+df['weight'] = pd.Series([65,75,85,90],index = [1,2,3,4])
+df
+df['height'] = pd.Series([150,151,152,153],index = [1,2,3,4])
+df
+# creating the table
+table12 = {'Name':['srinu','kishore','mani','ratna','ramu'],'Age':[25,26,27,28,29],'height':[151,152,153,154,155],'weight':[65,76,78,87,88]}
+df = pd.DataFrame(table12,index=[1,2,3,4,5])
+td = pd.DataFrame(df)
+td
+# deleting the column
+del td['Age']
+td
+# other method to delete the column
+#td.pop('two')
+td
+# row selection
+td.iloc[3:4]
+# giving the index number to select the particular Row
+# multiple Selection
+td[0:5]
+import pandas as pd
+# Addition of Rows to existing
+df = pd.DataFrame([[1,2],[3,4]],columns=['a','b'])
+df
+df2 = pd.DataFrame([[5,6],[7,8]],columns=['a','b'])
+df2
+## To add rows
+df = df.append(df2)
+df
+# Deletion of rows
+df = pd.DataFrame([[1,2],[3,4]],columns=['a','b'])
+df2 = pd.DataFrame([[5,6],[7,8]],columns=['a','b'],index=[2,3])
+df = df.append(df2)
+df.drop(1)
+td.head(2)
+td.tail(2)
+td.drop(4)
