@@ -22,3 +22,6 @@ y_kmeans = model.predict(df_norm)
 y_kmeans
 univ['clusters']=pd.Series(y_kmeans)
 univ
+print(confusion_matrix(univ['clusters'],abc))
+print(classification_report(univ['clusters'],abc))
+print(accuracy_score(univ['clusters'],abc))
