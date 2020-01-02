@@ -1,0 +1,531 @@
+Basic Python Coding
+import pandas as pd
+import numpy as np
+test = np.array(['s','o','c','i','a','l'])
+test
+s = pd.Series(test)
+s=pd.DataFrame(test)
+test = np.array(['s','o','c','i','a','l'])
+s = pd.Series(test,index = [1,2,3,4,5,6])
+test  = {'a':1 , 'b':2 , 'c':3}
+s = pd.Series(test)
+s = pd.Series([1,2,3,4,5,6],index = ['s','o','c','i','a','l'])
+x=pd.Series(['v','a','r','u','n','a'],index=[1,2,3,4,5,6])
+a=['varun','nagendra','chowdary']
+#Adding the value in the list
+a.append('aluri')
+#Adding the list inside the list
+a.append(['aluri'])
+#2 is the index and avn is the value
+a.insert(2,'avn')
+Data Frames and Series Program
+import pandas as pd
+import numpy as np
+test =[1,2,3,4,5]
+df = pd.DataFrame(test)
+df
+## Creating a Table
+table = [['srinu',25],['kishore',26],['mani',27],['ratna',28]]
+df = pd.DataFrame(table,columns =['Name','Age'])
+df
+table1 = {'Name':['srinu','kishore','mani','ratna'],'Age':[25,26,27,28]}
+df = pd.DataFrame(table1,index=[1,2,3,4])
+df
+## Columns Selection , deletion , addition
+df['weight'] = pd.Series([65,75,85,90],index = [1,2,3,4])
+df
+df['height'] = pd.Series([150,151,152,153],index = [1,2,3,4])
+df
+# creating the table
+table12 = {'Name':['srinu','kishore','mani','ratna','ramu'],'Age':[25,26,27,28,29],'height':[151,152,153,154,155],'weight':[65,76,78,87,88]}
+df = pd.DataFrame(table12,index=[1,2,3,4,5])
+td = pd.DataFrame(df)
+td
+# deleting the column
+del td['Age']
+td
+# other method to delete the column
+#td.pop('two')
+td
+# row selection
+td.iloc[3:4]
+# giving the index number to select the particular Row
+# multiple Selection
+td[0:5]
+import pandas as pd
+# Addition of Rows to existing
+df = pd.DataFrame([[1,2],[3,4]],columns=['a','b'])
+df
+df2 = pd.DataFrame([[5,6],[7,8]],columns=['a','b'])
+df2
+## To add rows
+df = df.append(df2)
+df
+# Deletion of rows
+df = pd.DataFrame([[1,2],[3,4]],columns=['a','b'])
+df2 = pd.DataFrame([[5,6],[7,8]],columns=['a','b'],index=[2,3])
+df = df.append(df2)
+df.drop(1)
+td.head(2)
+td.tail(2)
+td.drop(4)
+_______________________________________________________________________________
+Basic Stats on mba dataset
+import pandas as pd
+import numpy as np
+mba = pd.read_csv("C:\\Users\\Rohit\\Desktop\\PPTS\\mba.csv")
+mba
+len(mba)
+len(mba.columns)
+mba.shape
+mba.columns
+mba.head(20)
+mba.head(6)
+mba.tail(6)
+mba.info()
+mba.describe()
+mba.describe().transpose()
+mba[23:27]
+mba['workex']
+mba1 = mba[['workex','gmat']]
+mba1
+mba.mean()
+mba.std()
+mba.describe()
+mba['gmat'].mean()
+mba['gmat'].median()
+mba['gmat'].mode()
+mba['gmat'].var()
+mba['gmat'].std()
+max(mba['gmat'])
+min(mba['gmat'])
+mba.corr()
+np.corrcoef(mba['gmat'],mba['workex'])
+range = max(mba['gmat'])-min(mba['gmat'])
+range
+from scipy.stats import skew
+skew(mba['gmat'])
+from scipy.stats import kurtosis
+kurtosis(mba['gmat'])
+________________________________________________________________________________
+Data Visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import numpy as np
+mba = pd.read_csv("C:\\Users\\Rohit\\Desktop\\PPTS\\mba.csv")
+plot = mba.plot(kind='bar')
+plot
+mba['gmat'].hist()
+mba.hist()
+import numpy as np
+import matplotlib.pyplot as plt
+mba.boxplot()
+mba.boxplot(column ='gmat')
+mba.boxplot(column ='workex')
+__________________________________________________________________________________
+Outlier Code for deletion of outliers
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import numpy as np
+mba = pd.read_csv("C:\\Users\\Rohit\\Desktop\\PPTS\\mba.csv")
+mba.boxplot()
+mba.boxplot(column='gmat')
+import seaborn as sns
+sns.boxplot(mba['gmat']) 
+q1 = mba['gmat'].quantile(0.25)
+q1
+q3 = mba['gmat'].quantile(0.75)
+q3
+iqr = q3-q1
+iqr
+low  = q1-1.5*iqr
+low
+high = q3+1.5*iqr
+high
+mba1 = mba.loc[(mba['gmat'] > low) & (mba['gmat'] < high)]
+mba.shape
+mba1.shape
+__________________________________________________________________________________
+Scalling of the Data 
+import pandas as pd
+import numpy as np
+mba=pd.read_csv("C:\\Users\\ \\Desktop \\Python-CODES\\Simple Linear Regression\\mba.csv")
+mba.describe()
+mba
+names = mba.columns
+names
+from sklearn import preprocessing
+scaler = preprocessing.StandardScaler()
+mba1 = scaler.fit_transform(mba)
+mba1 = pd.DataFrame(mba1, columns=names)
+from sklearn.preprocessing import scale
+mba2 = scale(mba)
+__________________________________________________________________________________
+Simple Linear Regression 
+import pandas as pd 
+import numpy as np
+wcat=pd.read_csv("E:\Python Codes\Simple Linear\wc.at.csv")
+import matplotlib.pyplot as plt
+plt.scatter(x=wcat['Waist'],y=wcat['AT'])
+np.corrcoef(wcat['Waist'],wcat['AT'])
+wcat.corr()
+import statsmodels.formula.api as smf
+model=smf.ols('AT~Waist',data=wcat).fit()
+model.params
+model.summary()
+model2 = smf.ols('AT~np.log(Waist)',data=wcat).fit()
+model2.params
+model2.summary()
+model3 = smf.ols('np.log(AT)~Waist',data=wcat).fit()
+model3.params
+model3.summary()
+print (model.conf_int(0.05)) # 95% confidence interval
+print(model3.conf_int(0.01)) # 99% confidence level
+
+
+________________________________________________________________________________
+Multiple Linear Regression
+import pandas as pd 
+import matplotlib.pyplot as plt
+cars = pd.read_csv("cars.csv")
+cars
+cars.head()
+cars.corr()
+#Graph the coreleation b/w the variables
+import seaborn as sns
+sns.pairplot(cars)
+cars.columns
+# for regression model
+import statsmodels.formula.api as smf 
+ml1 = smf.ols('MPG~WT+VOL+SP+HP',data=cars).fit() # regression model
+ml1.params
+ml1.summary()
+# p-values for WT,VOL are more than 0.05 and also we know that [WT,VOL] has high correlation value 
+ml_v=smf.ols('MPG~VOL',data = cars).fit()  
+ml_v.summary()
+ml_w=smf.ols('MPG~WT',data = cars).fit()  
+ml_w.summary()
+ml_wv=smf.ols('MPG~WT+VOL',data = cars).fit()  
+ml_wv.summary()
+import statsmodels.api as sm
+sm.graphics.influence_plot(ml1)
+cars_new=cars.drop(cars.index[[76]])
+ml_new = smf.ols('MPG~WT+VOL+HP+SP',data = cars_new).fit()    
+ml_new.params
+ml_new.summary()
+print(ml_new.conf_int(0.05)) # 99% confidence level
+#Finding the Influence Factor Values
+rsq_hp = smf.ols('HP~WT+VOL+SP',data=cars_new).fit().rsquared  
+vif_hp = 1/(1-rsq_hp) 
+vif_hp
+rsq_wt = smf.ols('WT~HP+VOL+SP',data=cars_new).fit().rsquared  
+vif_wt = 1/(1-rsq_wt)
+vif_wt
+rsq_vol = smf.ols('VOL~WT+SP+HP',data=cars_new).fit().rsquared  
+vif_vol = 1/(1-rsq_vol)
+vif_vol
+rsq_sp = smf.ols('SP~WT+VOL+HP',data=cars_new).fit().rsquared  
+vif_sp = 1/(1-rsq_sp)
+vif_sp  
+#Creating the table for variables,vif-values and R-Squared   
+import pandas as pd
+d1 = {'Variables':pd.Series(['Hp','WT','VOL','SP']),'VIF':pd.Series([vif_hp,vif_wt,vif_vol,vif_sp]),'R-Squared':pd.series([rsq_hp,rsq_wt,rsq_vol,rsq_sp])}
+Vif_frame = pd.DataFrame(d1,columns=['Variables','VIF','R-Squared'])  
+Vif_frame
+#Final Model
+final_ml= smf.ols('MPG~VOL+SP+HP',data = cars_new).fit()
+sm.graphics.plot_partregress_grid(final_ml)
+final_ml.params
+final_ml.summary()
+______________________________________________________________________________
+Logistic Regression
+import pandas as pd 
+import numpy  as np
+claimants = pd.read_csv("C:\\Users \\Python-CODES\\Logistic Regression\\claimants.csv",sep=",")
+claimants.columns
+del claimants['CASENUM']
+claimants
+claimants.head(10)
+import statsmodels.formula.api as sm
+logit_model = sm.logit('ATTORNEY~CLMAGE+LOSS+CLMINSUR+CLMSEX+SEATBELT',data = claimants).fit()
+logit_model.summary()
+logit_model.params
+(np.exp(logit_model.params))
+from sklearn.metrics import confusion_matrix
+import scipy
+from sklearn import linear_model
+predict=logit_model.predict(pd.DataFrame(claimants[['CLMAGE','LOSS','CLMINSUR','CLMSEX','SEATBELT']]))
+predict
+pcnf_matrix = confusion_matrix(claimants['ATTORNEY'],predict > 0.5 )
+pcnf_matrix
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(claimants['ATTORNEY'],predict > 0.5)
+Accuracy_Score
+accuracy = (435+506)/(435+250+149+506)
+accuracy
+_________________________________________________________________________________
+H-Clustering
+import numpy as np
+import pandas as pd
+import matplotlib.pylab as plt
+from sklearn.cluster import KMeans
+from scipy.spatial.distance import cdist 
+univ = pd.read_csv("C:\\Users\\CH Prasanna Kumar\\Desktop\\varun\\R-CODES\\7.H Clustering\\hc.csv")
+from scipy.cluster.hierarchy import dendrogram, linkage
+from sklearn.cluster import AgglomerativeClustering
+univ
+del univ['Univ']
+univ
+df_norm = (univ - univ.min())/ (univ.max() -  univ.min()) 
+df_norm.head(10) 
+import scipy.cluster.hierarchy as sch
+dendrogram = sch.dendrogram(sch.linkage(df_norm, method = 'ward'))
+plt.title('Dendrogram')
+plt.xlabel('Customers')
+plt.ylabel('Euclidean distances')
+plt.show()
+from scipy.cluster.hierarchy import cophenet
+import scipy.cluster.hierarchy as sch
+from scipy.spatial.distance import pdist
+from sklearn.cluster import AgglomerativeClustering
+cluster = AgglomerativeClustering(n_clusters=3, affinity='euclidean', linkage='complete')  
+abc = cluster.fit_predict(df_norm)
+univ['clusters']=pd.Series(abc)
+__________________________________________________________________________________
+K-Means Clustering
+import numpy as np
+import pandas as pd
+import matplotlib.pylab as plt
+from sklearn.cluster import	KMeans
+from scipy.spatial.distance import cdist 
+from sklearn.cluster import KMeans
+from scipy.spatial.distance import cdist 
+univ = pd.read_csv("E:\\Python Codes\\14 K means and Hierarchical\\Universities.csv")
+?univ
+del univ['Univ']
+univ
+df_norm =(univ-univ.min())/(univ.max()-  univ.min()) 
+df_norm.head(10) 
+model=KMeans(n_clusters=5)
+abc = model.fit(df_norm)
+abc
+from sklearn.cluster import KMeans
+y_kmeans = model.predict(df_norm)
+y_kmeans
+univ['clusters']=pd.Series(y_kmeans)
+univ
+__________________________________________________________________________________
+PCA (Principal Component Analysis)
+import numpy as np
+import pandas as pd
+from scipy.spatial.distance import cdist 
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import scale 
+univ = pd.read_csv("C:\\Users \\varun\\R-CODES\\7.H Clustering\\hc.csv")
+univ
+del univ['Univ']
+univ
+univ_normal = scale(univ)
+univ_normal.shape
+univ_normal
+pca = PCA (n_components = 4)
+pca
+pca_values = pca.fit_transform(univ_normal)
+pca_values
+var = pca.explained_variance_ratio_
+var
+var1 = np.cumsum(np.round(var,decimals = 4)*100)
+var1
+principalDf = pd.DataFrame(data = pca_values,columns = ['principal component 1', 'principal component 2','principal component 3','principal component 4'])
+principalDf
+_______________________________________________________________________
+SVM (Support Vector Machine)
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+iris = pd.read_csv("E:\\Python Codes\\iris.csv")
+iris_setosa = iris.iloc[0:50,0:5]
+iris_versicolor = iris.iloc[50:100,0:5]
+iris_vergenica = iris.iloc[100:150,0:5]
+iris_versicolor
+df1 = pd.DataFrame(iris_setosa.iloc[0:25,0:5])
+df2 = pd.DataFrame(iris_versicolor.iloc[0:25,0:5])
+df3 = pd.DataFrame(iris_vergenica.iloc[0:25,0:5])
+iris_train = pd.concat([df1,df2,df3])
+iris_trainX_train = iris_train.iloc[:,0:4]
+X_train
+y_train = iris_train.iloc[:,4]
+y_train
+df1 = pd.DataFrame(iris_setosa.iloc[25:50,0:5])
+df2 = pd.DataFrame(iris_versicolor.iloc[25:50,0:5])
+df3 = pd.DataFrame(iris_vergenica.iloc[25:50,0:5])
+iris_test= pd.concat([df1,df2,df3])
+iris_test.shape
+X_test = iris_test.iloc[:,0:4]
+X_test
+y_test = iris_test.iloc[:,4]
+y_test
+from sklearn.svm import SVC
+classifier = SVC(kernel = 'linear', random_state = 0)
+classifier.fit(X_train, y_train)
+y_pred = classifier.predict(X_test)
+y_pred
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+cm
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(y_test, y_pred)
+Accuracy_Score
+from sklearn.svm import SVC
+classifier = SVC (kernel = 'rbf', random_state = 0)
+classifier.fit(X_train, y_train)
+y_pred = classifier.predict(X_test)
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+cm
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(y_test, y_pred)
+Accuracy_Score
+__________________________________________________________________________________
+KNN (K-Nearest Neighbours)
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+wbcd = pd.read_csv("C:\\Users\\Rohit\\Desktop\\PPTS\\R Codes\\KNN\\wbcd.csv")
+wbcd
+wbcd.shape
+wbcd
+del wbcd['id']
+wbcd.shape
+wbcd
+X = wbcd.iloc[:, 1:].values
+y = wbcd.iloc[:, 0].values
+y
+norm =(X-X.min())/(X.max() -X.min()) 
+norm
+from sklearn.model_selection import train_test_split  
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20) 
+y_test.shape
+from sklearn.neighbors import KNeighborsClassifier
+classifier = KNeighborsClassifier(n_neighbors=5)  
+classifier.fit(X_train, y_train)
+y_pred = classifier.predict(X_test)
+y_pred
+from sklearn.metrics import classification_report, confusion_matrix  
+print(confusion_matrix(y_test, y_pred))  
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(y_test, y_pred)
+Accuracy_Score
+________________________________________________________________________________
+NB Classfier
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+nb = pd.read_csv("C:\\Users\\Rohit\\Desktop\\PPTS\\Social_Network_Ads.csv")
+nb
+del nb['User ID']
+nb.shape
+X = nb.iloc[:, -3:].values
+y = nb.iloc[:, 3].values
+y
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+from sklearn.naive_bayes import GaussianNB
+model= GaussianNB()
+model.fit(X_train,y_train)
+y_pred = model.predict(X_test)
+y_pred
+y_test
+from sklearn.metrics import classification_report, confusion_matrix  
+print(confusion_matrix(y_test, y_pred))  
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(y_test, y_pred)
+Accuracy_Score
+__________________________________________________________________________________
+Decision Tree
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+iris = pd.read_csv("E:\\Python Codes\\iris.csv")
+iris_setosa = iris.iloc[0:50,0:5]
+iris_versicolor = iris.iloc[50:100,0:5]
+iris_vergenica = iris.iloc[100:150,0:5]
+df1 = pd.DataFrame(iris_setosa.iloc[0:25,0:5])
+df2 = pd.DataFrame(iris_versicolor.iloc[0:25,0:5])
+df3 = pd.DataFrame(iris_vergenica.iloc[0:25,0:5])
+iris_train = pd.concat([df1,df2,df3])
+iris_train
+X_train = iris_train.iloc[:,0:4]
+X_train
+y_train = iris_train.iloc[:,4]
+y_train
+df1 = pd.DataFrame(iris_setosa.iloc[25:50,0:5])
+df2 = pd.DataFrame(iris_versicolor.iloc[25:50,0:5])
+df3 = pd.DataFrame(iris_vergenica.iloc[25:50,0:5])
+iris_test= pd.concat([df1,df2,df3])
+X_test = iris_test.iloc[:,0:4]
+X_test
+y_test = iris_test.iloc[:,4]
+y_test
+from sklearn.tree import DecisionTreeClassifier
+classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 0)
+classifier.fit(X_train, y_train)
+# Predicting the Test set results
+y_pred = classifier.predict(X_test)
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(y_test, y_pred)
+Accuracy_Score
+________________________________________________________________________________
+Random Forest
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+iris = pd.read_csv("E:\\Python Codes\\iris.csv")
+iris_setosa = iris.iloc[0:50,0:5]
+iris_versicolor = iris.iloc[50:100,0:5]
+iris_vergenica = iris.iloc[100:150,0:5]
+df1 = pd.DataFrame(iris_setosa.iloc[0:25,0:5])
+df2 = pd.DataFrame(iris_versicolor.iloc[0:25,0:5])
+df3 = pd.DataFrame(iris_vergenica.iloc[0:25,0:5])
+iris_train = pd.concat([df1,df2,df3])
+iris_train
+X_train = iris_train.iloc[:,0:4]
+X_train
+y_train = iris_train.iloc[:,4]
+y_train
+df1 = pd.DataFrame(iris_setosa.iloc[25:50,0:5])
+df2 = pd.DataFrame(iris_versicolor.iloc[25:50,0:5])
+df3 = pd.DataFrame(iris_vergenica.iloc[25:50,0:5])
+iris_test= pd.concat([df1,df2,df3])
+X_test = iris_test.iloc[:,0:4]
+X_test
+y_test = iris_test.iloc[:,4]
+y_test
+from sklearn.ensemble import RandomForestClassifier
+classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)
+classifier.fit(X_train, y_train)
+y_pred = classifier.predict(X_test)
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+cm
+from sklearn.metrics import accuracy_score 
+Accuracy_Score = accuracy_score(y_test, y_pred)
+Accuracy_Score
+_________________________________________________________________________________________
+
+				Apriori Algorithim
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+dataset = pd.read_csv('Market_Basket_Optimisation.csv', header = None)
+transactions = []
+for i in range(0, 7501):
+    transactions.append([str(dataset.values[i,j]) for j in range(0, 20)])
+from apyori import apriori
+rules = apriori(transactions, min_support = 0.003, min_confidence = 0.2, min_lift = 3, min_length = 2)
+results = list(rules)
